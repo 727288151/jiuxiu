@@ -29,6 +29,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.hualing365.jiuxiu.entity.UserLog;
+import com.hualing365.jiuxiu.service.IRoomService;
 import com.hualing365.jiuxiu.service.IUserLogService;
 import com.hualing365.jiuxiu.wx.SignUtil;
 
@@ -44,6 +45,9 @@ public class WxController {
 	
 	@Autowired
 	IUserLogService userLogService;
+	
+	@Autowired
+	IRoomService roomService;
 
 	@GetMapping("/wx")
 	public String doGet(String signature, String timestamp, String nonce, String echostr){
@@ -82,7 +86,14 @@ public class WxController {
 						userLogList = userLogService.queryAllUserOnline(Integer.valueOf(arr[0]));
 						
 					} else if(arr.length == 2){
-						
+						//on-off
+						if(arr[1].equals("on")){
+							roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 1);
+						}else if(arr[1].equals("off")){
+							roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 0);
+						}else if(arr[1].equals("add")){
+							
+						}
 						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
 					
 					} else if(arr.length == 3){
@@ -94,9 +105,11 @@ public class WxController {
 				}
 				for(int i=userLogList.size()-1; i>=0; i--){
 					UserLog ul = userLogList.get(i);
-					result.append(ul.getNickName()).append(":")
-						.append(ul.getLoginDateTime()).append("-")
-						.append(ul.getLogoutDateTime()).append("\n");
+					result.append(i).append(".")
+						.append(ul.getNickName()).append("(").append(ul.getWealthLevel()).append(")")
+						.append(ul.isHide()?"(隐)":"").append(":").append("\n")
+						.append(ul.getLoginDateTime().substring(11)).append("-")
+						.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n-----------------\n");
 				}
 			}
 			if(result.length()==0){

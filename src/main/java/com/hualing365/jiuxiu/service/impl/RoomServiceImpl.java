@@ -24,6 +24,11 @@ public class RoomServiceImpl implements IRoomService {
 	RoomMapper roomMapper;
 	
 	@Override
+	public Room queryRoomById(int roomId) {
+		return roomMapper.queryRoomById(roomId);
+	}
+	
+	@Override
 	public List<Room> queryAllActiveRooms() {
 		return roomMapper.queryAllActiveRooms();
 	}
@@ -31,6 +36,11 @@ public class RoomServiceImpl implements IRoomService {
 	@Override
 	public void updateRoom(Room room) {
 		roomMapper.updateRoom(room);
+	}
+	
+	@Override
+	public void updateRoomOnOff(int roomId, int active) {
+		roomMapper.updateRoomOnOff(roomId, active);
 	}
 
 }

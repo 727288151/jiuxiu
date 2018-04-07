@@ -13,6 +13,13 @@ import com.hualing365.jiuxiu.entity.Room;
  * @since Mar 11, 2018 12:07:55 AM
  */
 public interface IRoomService {
+	
+	/**
+	 * 根据roomId查询
+	 * @param roomId
+	 * @return
+	 */
+	public Room queryRoomById(int roomId);
 
 	/**
 	 * 获取直播间active状态的列表
@@ -25,4 +32,11 @@ public interface IRoomService {
 	 * @param room
 	 */
 	public void updateRoom(Room room);
+	
+	/**
+	 * 修改room状态
+	 * @param roomId
+	 * @param active
+	 */
+	public void updateRoomOnOff(int roomId, int active);
 }

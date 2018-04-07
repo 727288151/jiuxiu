@@ -4,24 +4,4 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <filter>
-  	<filter-name>DruidFilter</filter-name>
-  	<display-name>DruidFilter</display-name>
-  	<description></description>
-  	<filter-class>com.hualing365.jiuxiu.filter.DruidFilter</filter-class>
-  </filter>
-  <filter-mapping>
-  	<filter-name>DruidFilter</filter-name>
-  	<url-pattern>/DruidFilter</url-pattern>
-  </filter-mapping>
-  <servlet>
-  	<servlet-name>DruidServlet</servlet-name>
-  	<display-name>DruidServlet</display-name>
-  	<description></description>
-  	<servlet-class>com.hualing365.jiuxiu.servlet.DruidServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>DruidServlet</servlet-name>
-  	<url-pattern>/DruidServlet</url-pattern>
-  </servlet-mapping>
 </web-app>

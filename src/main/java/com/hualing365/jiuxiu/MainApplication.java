@@ -5,13 +5,11 @@ import javax.servlet.ServletContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.hualing365.jiuxiu.scheduler.thread.AsyncScanRoomTask;
 
-@ServletComponentScan
 @SpringBootApplication
 public class MainApplication extends SpringBootServletInitializer{
 	
