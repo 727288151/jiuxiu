@@ -68,7 +68,7 @@ public class AsyncScanRoomTask {
 			}
 			
 			try {
-				Thread.sleep(5000L);
+				Thread.sleep(1000L);
 			} catch (InterruptedException e) {
 			}
 		}
@@ -81,7 +81,7 @@ public class AsyncScanRoomTask {
 	public Set<Integer> getActiveRooms(){
 		Set<Integer> set = new HashSet<Integer>();
 		List<Room> roomList = roomService.queryAllActiveRooms();
-		System.out.println("Active:"+roomList.size());
+		//System.out.println("Active:"+roomList.size());
 		for(Room room : roomList){
 			set.add(room.getRoomId());
 			roomNameMap.put(room.getRoomId(), room.getRoomName());

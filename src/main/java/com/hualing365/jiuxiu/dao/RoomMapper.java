@@ -30,9 +30,9 @@ public interface RoomMapper {
 	@Select("select roomid, roomname, active from t_room where active = 1")
 	public List<Room> queryAllActiveRooms();
 	
-	@Update("update t_room set active=#{active} where roomid=#{roomId}")
+	@Update("update t_room set totalcount=#{totalCount}, realcount=#{realCount}, admincount=#{adminCount}, robotcount=#{robotCount}, blankcount=#{blankCount} where roomid=#{roomId}")
 	public void updateRoom(Room room);
 	
-	@Update("update t_room set  where roomid=#{roomId}")
+	@Update("update t_room set active=#{active} where roomid=#{roomId}")
 	public void updateRoomOnOff(@Param("roomId") int roomId, @Param("active") int active);
 }
