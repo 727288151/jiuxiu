@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.hualing365</groupId>
 	<artifactId>jiuxiu</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>jiuxiu Maven Webapp</name>
 	<url>http://maven.apache.org</url>
