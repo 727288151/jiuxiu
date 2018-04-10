@@ -89,8 +89,10 @@ public class WxController {
 						//on-off
 						if(arr[1].equals("on")){
 							roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 1);
+							result.append("ok");
 						}else if(arr[1].equals("off")){
 							roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 0);
+							result.append("ok");
 						}else if(arr[1].equals("add")){
 							
 						}
@@ -105,11 +107,10 @@ public class WxController {
 				}
 				for(int i=userLogList.size()-1; i>=0; i--){
 					UserLog ul = userLogList.get(i);
-					result.append(i).append(".")
-						.append(ul.getNickName()).append("(").append(ul.getWealthLevel()).append(")")
-						.append(ul.isHide()?"(隐)":"").append(":").append("\n")
+					result.append(ul.getNickName()).append(ul.getWealthLevel())
+						.append(ul.isHide()?"(隐)":"").append(":")
 						.append(ul.getLoginDateTime().substring(11)).append("-")
-						.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n-----------------\n");
+						.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n");
 				}
 			}
 			if(result.length()==0){
