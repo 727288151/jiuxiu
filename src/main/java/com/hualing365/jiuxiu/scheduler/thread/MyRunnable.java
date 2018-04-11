@@ -91,7 +91,7 @@ public class MyRunnable implements Runnable {
 	public void handle(String str){
 		JSONObject jsonObj = JSONObject.parseObject(str);
 		//如果返回结果不正常，则退出不进行下一步操作
-		if(jsonObj.getIntValue("code") != 200){
+		if(jsonObj == null || jsonObj.getIntValue("code") != 200){
 			logger.error("Stoped! RoomId is wrong-"+roomName + "("+roomId+")");
 			setActive(false);
 			return ;
