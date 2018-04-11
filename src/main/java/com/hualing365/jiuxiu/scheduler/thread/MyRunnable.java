@@ -275,7 +275,7 @@ public class MyRunnable implements Runnable {
 		Date curDate = new Date();
 		String dateTime = CommonUtil.formatDate(curDate, "yyyy-MM-dd HH:mm:ss");
 		
-		UserLog userLog = userLogService.queryLatestUserLog(roomId, uid);
+		UserLog userLog = userLogService.queryLatestUserLogOnline(roomId, uid);
 		if(userLog != null){
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String loginDateTime = userLog.getLoginDateTime();

@@ -29,8 +29,8 @@ public class UserLogServiceImpl implements IUserLogService {
 	}
 
 	@Override
-	public UserLog queryLatestUserLog(int roomId, int uid) {
-		return userLogMapper.queryLatestUserLog(roomId, uid);
+	public UserLog queryLatestUserLogOnline(int roomId, int uid) {
+		return userLogMapper.queryLatestUserLogOnline(roomId, uid);
 	}
 
 	@Override

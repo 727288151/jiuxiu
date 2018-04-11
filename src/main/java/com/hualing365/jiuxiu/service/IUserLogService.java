@@ -26,7 +26,7 @@ public interface IUserLogService {
 	 * @param uid
 	 * @return
 	 */
-	public UserLog queryLatestUserLog(int roomId, int uid);
+	public UserLog queryLatestUserLogOnline(int roomId, int uid);
 
 	/**
 	 * 获取某个直播间当前在线用户列表

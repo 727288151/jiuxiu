@@ -39,8 +39,8 @@ public class AsyncScanRoomTask {
 	@Async
 	public void executeAsyncTask(WebApplicationContext webAppCtx){
 		while(true){
-			Set<Integer> rooms = getActiveRooms();
 			List<Room> roomList = roomService.queryAllActiveRooms();
+			Set<Integer> rooms = getActiveRooms(roomList);
 			for(Room room : roomList){
 				if(!runnableMap.containsKey(room.getRoomId())){
 					//创建Runnable并交给线程池去执行
@@ -78,9 +78,8 @@ public class AsyncScanRoomTask {
 	 * 获取所有要监听的房间号
 	 * @return
 	 */
-	public Set<Integer> getActiveRooms(){
+	public Set<Integer> getActiveRooms(List<Room> roomList){
 		Set<Integer> set = new HashSet<Integer>();
-		List<Room> roomList = roomService.queryAllActiveRooms();
 		//System.out.println("Active:"+roomList.size());
 		for(Room room : roomList){
 			set.add(room.getRoomId());

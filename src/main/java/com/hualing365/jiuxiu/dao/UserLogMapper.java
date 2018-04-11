@@ -28,8 +28,8 @@ public interface UserLogMapper {
 	@Insert("insert into t_user_log (roomid, uid, wealthlevel, wealthleveldesc, logindatetime, logoutdatetime, duration, online, hide, os) values (#{roomId}, #{uid}, #{wealthLevel}, #{wealthLevelDesc}, #{loginDateTime}, #{logoutDateTime}, #{duration}, #{online}, #{hide}, #{os})")
 	public void addUserLog(UserLog userLog);
 	
-	@Select("select * from t_user_log where roomid = #{roomId} and uid = #{uid} order by id desc limit 0,1")
-	public UserLog queryLatestUserLog(@Param("roomId") int roomId, @Param("uid") int uid);
+	@Select("select * from t_user_log where roomid = #{roomId} and uid = #{uid} and online=1 order by id desc limit 0,1")
+	public UserLog queryLatestUserLogOnline(@Param("roomId") int roomId, @Param("uid") int uid);
 
 	@Select("select u.nickname,ul.* from t_user_log ul left join t_user u on u.uid=ul.uid where ul.online=1 and ul.roomid = #{roomId}")
 	@ResultType(User.class)
