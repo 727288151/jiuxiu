@@ -5,6 +5,7 @@ package com.hualing365.jiuxiu.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
@@ -29,6 +30,9 @@ public interface RoomMapper {
 
 	@Select("select roomid, roomname, active from t_room where active = 1")
 	public List<Room> queryAllActiveRooms();
+
+	@Insert("insert into t_room (roomid, roomname, active) values (#{roomId}, #{roomname}, 0)")
+	public void addRoom(Room room);
 	
 	@Update("update t_room set totalcount=#{totalCount}, realcount=#{realCount}, admincount=#{adminCount}, robotcount=#{robotCount}, blankcount=#{blankCount} where roomid=#{roomId}")
 	public void updateRoom(Room room);

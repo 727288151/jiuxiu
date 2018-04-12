@@ -32,6 +32,11 @@ public class RoomServiceImpl implements IRoomService {
 	public List<Room> queryAllActiveRooms() {
 		return roomMapper.queryAllActiveRooms();
 	}
+
+	@Override
+	public void addRoom(Room room) {
+		roomMapper.addRoom(room);
+	}
 	
 	@Override
 	public void updateRoom(Room room) {

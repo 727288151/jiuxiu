@@ -26,6 +26,12 @@ public interface IRoomService {
 	 * @return
 	 */
 	public List<Room> queryAllActiveRooms();
+
+	/**
+	 * 增加room
+	 * @param room
+	 */
+	public void addRoom(Room room);
 	
 	/**
 	 * 修改room信息

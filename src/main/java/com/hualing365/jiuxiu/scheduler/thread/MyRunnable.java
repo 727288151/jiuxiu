@@ -138,7 +138,11 @@ public class MyRunnable implements Runnable {
 				String headImage = userObj.getString("headimage120");
 				String familyBadge = userObj.getString("familyBadge");
 				int os = userObj.getIntValue("os");
-				insert(uid, accountId, nickName, wealthlevel, headImage, familyBadge, os, 0);
+				int hide = 0;
+				if(nickName.equals("神秘人")){
+					hide = 1;
+				}
+				insert(uid, accountId, nickName, wealthlevel, headImage, familyBadge, os, hide);
 			}
 			//如果uid已包含，则先删除，set中剩余的就是已经下线的
 			else{
@@ -198,7 +202,6 @@ public class MyRunnable implements Runnable {
 	 */
 	public void insert(int uid, int accountId, String nickName, int wealthLevel, String headImage, String familyBadge, int os, int hide){
 		String dateTime = CommonUtil.formatDate(new Date(), "yyyy-MM-dd HH:mm:ss");
-		logger.info(prefix() + nickName+"("+uid+") came in!");
 		
 		//如果用户表不存在，则插入用户
 		User user = userService.queryUserById(uid);
@@ -214,8 +217,11 @@ public class MyRunnable implements Runnable {
 		}
 		//如果已存在，比较是否修改了昵称，头像，家族等，如果修改了，更改用户表，并把之前的放入历史表user_history
 		else{
-			if(!user.getNickName().equals(nickName)){
-				userService.addUserHistory(user);
+			if( !user.getNickName().equals(nickName) && !nickName.equals("神秘人")){
+				//如果原来不是神秘人，才会把修改记录到历史表，否则只改名字
+				if(!user.getNickName().equals("神秘人")){
+					userService.addUserHistory(user);
+				}
 				user = new User();
 				user.setUid(uid);
 				user.setNickName(nickName);
@@ -223,7 +229,16 @@ public class MyRunnable implements Runnable {
 				user.setFamilyBadge(familyBadge);
 				user.setDateTime(dateTime);
 				userService.updateUser(user);
+			}else if(!user.getHeadImage().equals(headImage)){
+				User userUpd = new User();
+				userUpd.setUid(uid);
+				userUpd.setNickName(nickName.equals("神秘人") ? user.getNickName() : nickName);
+				userUpd.setHeadImage(headImage);
+				userUpd.setFamilyBadge(familyBadge);
+				userUpd.setDateTime(dateTime);
+				userService.updateUser(userUpd);
 			}
+			nickName = user.getNickName();
 		}
 		
 		//插入用户出入日志表
@@ -237,6 +252,8 @@ public class MyRunnable implements Runnable {
 		userLog.setHide(hide == 0 ? false : true);
 		userLog.setOs(os);
 		userLogService.addUserLog(userLog);
+		
+		logger.info(prefix() + nickName+"("+uid+")" + (hide==1?"[hidden]":"") + " came in!");
 		
 	}
 

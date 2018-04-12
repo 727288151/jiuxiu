@@ -28,6 +28,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.hualing365.jiuxiu.entity.Room;
 import com.hualing365.jiuxiu.entity.UserLog;
 import com.hualing365.jiuxiu.service.IRoomService;
 import com.hualing365.jiuxiu.service.IUserLogService;
@@ -81,44 +82,54 @@ public class WxController {
 				String content = map.get("Content");
 				String[] arr = content.split("-");
 				List<UserLog> userLogList = new ArrayList<UserLog>();
-				try{
-					if(arr.length == 1) {
-						userLogList = userLogService.queryAllUserOnline(Integer.valueOf(arr[0]));
-						
-					} else if(arr.length == 2){
-						//on-off
-						if(arr[1].equals("on")){
-							roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 1);
-							result.append("ok");
-						}else if(arr[1].equals("off")){
-							roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 0);
-							result.append("ok");
-						}else if(arr[1].equals("add")){
-							
-						}
-						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
+				
+				if(arr.length == 1) {
+					userLogList = userLogService.queryAllUserOnline(Integer.valueOf(arr[0]));
 					
-					} else if(arr.length == 3){
-						
+				} else if(arr.length == 2){
+					//on-off
+					if(arr[1].equals("on")){
+						roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 1);
+						result.append("ok");
+					}else if(arr[1].equals("off")){
+						roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 0);
+						result.append("ok");
+					}
+					userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
+				
+				} else if(arr.length == 3){
+					//add-83151142-名称
+					if(arr[0].equals("add")){
+						Room room = new Room();
+						room.setRoomId(Integer.valueOf(arr[1]));
+						room.setRoomName(arr[2]);
+						roomService.addRoom(room);
+						result.append("ok");
+					}else{
 						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]), Integer.valueOf(arr[2]));
 					}
-				}catch(Exception e){
-					//ignore
 				}
+					
 				for(int i=userLogList.size()-1; i>=0; i--){
 					UserLog ul = userLogList.get(i);
-					result.append(ul.getNickName()).append(ul.getWealthLevel())
+					result.append(i).append(".")
+						.append(ul.getNickName()).append(ul.getWealthLevel())
 						.append(ul.isHide()?"(隐)":"").append(":")
 						.append(ul.getLoginDateTime().substring(11)).append("-")
 						.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n");
 				}
+				
 			}
 			if(result.length()==0){
 				result.append(msgType);
 			}
+			
 		} catch (IOException e) {
 			//e.printStackTrace();
 			//System.err.println(e.getMessage());
+			logger.error(e.getMessage());
+			result.append("Error:").append(e.getMessage());
+		} catch (Exception e){
 			logger.error(e.getMessage());
 			result.append("Error:").append(e.getMessage());
 		}
