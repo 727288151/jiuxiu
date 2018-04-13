@@ -52,7 +52,7 @@ public class UserController {
 		
 		try {
             Connection conn = dataSource.getConnection();
-            ClassPathResource rc = new ClassPathResource("user.sql", this.getClass());
+            ClassPathResource rc = new ClassPathResource("user_sql", this.getClass());
             EncodedResource er = new EncodedResource(rc, "utf-8");
             ScriptUtils.executeSqlScript(conn, er, true, true, "--", null, "/*", "*/");
         } catch (Exception e) {
