@@ -112,8 +112,8 @@ public class WxController {
 					
 				for(int i=userLogList.size()-1; i>=0; i--){
 					UserLog ul = userLogList.get(i);
-					result.append(i).append(".")
-						.append(ul.getNickName()).append(ul.getWealthLevel())
+					result.append(ul.getWealthLevel()).append(".")
+						.append(ul.getNickName())
 						.append(ul.isHide()?"(隐)":"").append(":")
 						.append(ul.getLoginDateTime().substring(11)).append("-")
 						.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n");
