@@ -94,8 +94,9 @@ public class WxController {
 					}else if(arr[1].equals("off")){
 						roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 0);
 						result.append("ok");
+					}else {
+						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
 					}
-					userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
 				
 				} else if(arr.length == 3){
 					//add-83151142-名称
