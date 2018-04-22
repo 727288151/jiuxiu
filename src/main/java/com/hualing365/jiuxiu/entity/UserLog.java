@@ -26,6 +26,11 @@ public class UserLog {
 	int uid;
 	
 	/**
+	 * 靓号ID
+	 */
+	int accountId;
+	
+	/**
 	 * 用户昵称
 	 */
 	String nickName;
@@ -94,6 +99,14 @@ public class UserLog {
 
 	public void setUid(int uid) {
 		this.uid = uid;
+	}
+
+	public int getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
 	}
 
 	public String getNickName() {

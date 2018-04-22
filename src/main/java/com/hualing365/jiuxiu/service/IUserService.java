@@ -1,5 +1,7 @@
 package com.hualing365.jiuxiu.service;
 
+import java.util.List;
+
 import com.hualing365.jiuxiu.entity.User;
 
 /**
@@ -33,5 +35,12 @@ public interface IUserService {
 	 * @param user
 	 */
 	public void addUserHistory(User user);
+	
+	/**
+	 * 查询用户历史名称
+	 * @param uid
+	 * @return
+	 */
+	public List<User> queryHistory(int uid);
 	
 }

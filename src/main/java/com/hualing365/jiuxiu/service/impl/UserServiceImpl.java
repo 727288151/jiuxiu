@@ -3,6 +3,8 @@
  */
 package com.hualing365.jiuxiu.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,11 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public void addUserHistory(User user) {
 		userMapper.addUserHistory(user);
+	}
+	
+	@Override
+	public List<User> queryHistory(int uid) {
+		return userMapper.queryHistory(uid);
 	}
 
 }

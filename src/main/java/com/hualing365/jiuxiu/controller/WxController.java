@@ -28,10 +28,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.alibaba.druid.util.StringUtils;
 import com.hualing365.jiuxiu.entity.Room;
+import com.hualing365.jiuxiu.entity.User;
 import com.hualing365.jiuxiu.entity.UserLog;
 import com.hualing365.jiuxiu.service.IRoomService;
 import com.hualing365.jiuxiu.service.IUserLogService;
+import com.hualing365.jiuxiu.service.IUserService;
 import com.hualing365.jiuxiu.wx.SignUtil;
 
 /**
@@ -46,6 +49,9 @@ public class WxController {
 	
 	@Autowired
 	IUserLogService userLogService;
+	
+	@Autowired
+	IUserService userService;
 	
 	@Autowired
 	IRoomService roomService;
@@ -82,6 +88,7 @@ public class WxController {
 				String content = map.get("Content");
 				String[] arr = content.split("-");
 				List<UserLog> userLogList = new ArrayList<UserLog>();
+				List<User> userHistoryList = null;
 				
 				if(arr.length == 1) {
 					userLogList = userLogService.queryAllUserOnline(Integer.valueOf(arr[0]));
@@ -94,7 +101,13 @@ public class WxController {
 					}else if(arr[1].equals("off")){
 						roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 0);
 						result.append("ok");
-					}else {
+					}else if(arr[1].equals("h")){
+						userHistoryList = userService.queryHistory(Integer.valueOf(arr[0]));
+						for(int i=userHistoryList.size()-1; i>=0; i--){
+							User u = userHistoryList.get(i);
+							result.append(u.getNickName()).append("\n");
+						}
+					}else if(StringUtils.isNumber(arr[1])){
 						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
 					}
 				
@@ -110,14 +123,16 @@ public class WxController {
 						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]), Integer.valueOf(arr[2]));
 					}
 				}
-					
-				for(int i=userLogList.size()-1; i>=0; i--){
-					UserLog ul = userLogList.get(i);
-					result.append(ul.getWealthLevel()).append(".")
-						.append(ul.getNickName())
-						.append(ul.isHide()?"(隐)":"").append(":")
-						.append(ul.getLoginDateTime().substring(11)).append("-")
-						.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n");
+				
+				if(userHistoryList == null){
+					for(int i=userLogList.size()-1; i>=0; i--){
+						UserLog ul = userLogList.get(i);
+						result.append(ul.getWealthLevel()).append(".")
+							.append(ul.getNickName()).append("(").append(ul.getUid()).append(")")
+							.append(ul.isHide()?"(隐)[":"[").append(ul.getOs()).append("]:\n")
+							.append(ul.getLoginDateTime().substring(11)).append("-")
+							.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n");
+					}
 				}
 				
 			}

@@ -31,16 +31,16 @@ public interface UserLogMapper {
 	@Select("select * from t_user_log where roomid = #{roomId} and uid = #{uid} and online=1 order by id desc limit 0,1")
 	public UserLog queryLatestUserLogOnline(@Param("roomId") int roomId, @Param("uid") int uid);
 
-	@Select("select u.nickname,ul.* from t_user_log ul left join t_user u on u.uid=ul.uid where ul.online=1 and ul.roomid = #{roomId}")
+	@Select("select u.nickname,u.accountid,ul.* from t_user_log ul left join t_user u on u.uid=ul.uid where ul.online=1 and ul.roomid = #{roomId}")
 	@ResultType(User.class)
 	public List<UserLog> queryAllUserOnline(int roomId);
 	
 	@Update("update t_user_log set logoutdatetime = #{logoutDateTime}, duration = #{duration}, online=0 where id=#{id}")
 	public void offline(UserLog userLog);
 	
-	@Select("select u.nickname,ul.* from t_user_log ul left join t_user u on u.uid=ul.uid where ul.roomid=#{roomId} and ul.uid=#{uid} order by id desc limit 0,#{count}")
+	@Select("select u.nickname,u.accountid,ul.* from t_user_log ul left join t_user u on u.uid=ul.uid where ul.roomid=#{roomId} and ul.uid=#{uid} order by id desc limit 0,#{count}")
 	public List<UserLog> queryUserLogWithUID(@Param("roomId") int roomId,@Param("uid") int uid,@Param("count") int count);
 	
-	@Select("select u.nickname,ul.* from t_user_log ul left join t_user u on u.uid=ul.uid where ul.roomid=#{roomId} order by id desc limit 0,#{count}")
+	@Select("select u.nickname,u.accountid,ul.* from t_user_log ul left join t_user u on u.uid=ul.uid where ul.roomid=#{roomId} order by id desc limit 0,#{count}")
 	public List<UserLog> queryUserLogWithoutUID(@Param("roomId") int roomId, @Param("count") int count);
 }

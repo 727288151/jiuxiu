@@ -3,6 +3,8 @@
  */
 package com.hualing365.jiuxiu.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.ResultType;
@@ -33,4 +35,8 @@ public interface UserMapper {
 	
 	@Insert("insert into t_user_history(uid, accountid, nickname, headimage, familybadge, datetime) values(#{uid}, #{accountId}, #{nickName}, #{headImage}, #{familyBadge}, #{dateTime})")
 	public void addUserHistory(User user);
+	
+	@Select("select * from t_user_history where uid=#{uid} order by id asc")
+	@ResultType(User.class)
+	public List<User> queryHistory(int uid);
 }
