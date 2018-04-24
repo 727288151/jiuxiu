@@ -80,7 +80,10 @@ public class UserController {
             Connection conn = dataSource.getConnection();
             ClassPathResource rc = new ClassPathResource("user.sql");
             EncodedResource er = new EncodedResource(rc, "utf-8");
-            ScriptUtils.executeSqlScript(conn, er, true, true, "--", null, "/*", "*/");
+            ScriptUtils.executeSqlScript(conn, er, false, true, "--", null, "/*", "*/");
+            rc = new ClassPathResource("user_history.sql");
+            er = new EncodedResource(rc, "utf-8");
+            ScriptUtils.executeSqlScript(conn, er, false, true, "--", null, "/*", "*/");
         } catch (Exception e) {
             e.printStackTrace();
         }
