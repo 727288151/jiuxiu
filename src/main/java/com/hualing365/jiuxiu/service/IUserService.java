@@ -43,4 +43,11 @@ public interface IUserService {
 	 */
 	public List<User> queryHistory(int uid);
 	
+	/**
+	 * 查询所有用户历史
+	 * @param uid
+	 * @return
+	 */
+	public List<User> queryAllUserHistory();
+	
 }

@@ -47,5 +47,10 @@ public class UserServiceImpl implements IUserService {
 	public List<User> queryHistory(int uid) {
 		return userMapper.queryHistory(uid);
 	}
+	
+	@Override
+	public List<User> queryAllUserHistory() {
+		return userMapper.queryAllUserHistory();
+	}
 
 }

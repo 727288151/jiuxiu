@@ -40,6 +40,11 @@ public class UserController {
 		return userService.queryUserById(uid);
 	}
 	
+	@RequestMapping("/queryalluserhistory")
+	public List<User> queryAllUserHistory(){
+		return userService.queryAllUserHistory();
+	}
+	
 	@RequestMapping("/l/{roomId}/{count}")
 	public String queryHistory(@PathVariable int roomId, @PathVariable Integer count){
 		if(count == null || count == 0){
@@ -80,10 +85,10 @@ public class UserController {
             Connection conn = dataSource.getConnection();
             ClassPathResource rc = new ClassPathResource("user.sql");
             EncodedResource er = new EncodedResource(rc, "utf-8");
-            ScriptUtils.executeSqlScript(conn, er, false, true, "--", null, "/*", "*/");
-            rc = new ClassPathResource("user_history.sql");
-            er = new EncodedResource(rc, "utf-8");
-            ScriptUtils.executeSqlScript(conn, er, false, true, "--", null, "/*", "*/");
+            ScriptUtils.executeSqlScript(conn, er, true, true, "--", null, "/*", "*/");
+            //rc = new ClassPathResource("user_history.sql");
+            //er = new EncodedResource(rc, "utf-8");
+            //ScriptUtils.executeSqlScript(conn, er, false, true, "--", null, "/*", "*/");
         } catch (Exception e) {
             e.printStackTrace();
         }

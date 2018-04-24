@@ -39,4 +39,8 @@ public interface UserMapper {
 	@Select("select * from t_user_history where uid=#{uid} order by id asc")
 	@ResultType(User.class)
 	public List<User> queryHistory(int uid);
+	
+	@Select("select * from t_user_history order by id asc")
+	@ResultType(User.class)
+	public List<User> queryAllUserHistory();
 }
