@@ -81,6 +81,7 @@ public class WxController {
 		StringBuilder result = new StringBuilder();
 		String fromUserName = null;
 		String toUserName = null;
+		String countStr = "";
 		try {
 			//String data = readStream(request.getInputStream());
 			
@@ -101,6 +102,12 @@ public class WxController {
 					}else if("2".equals(arr[0])) {
 						arr = new String[] {"83151142","20"};
 					}
+					Room room = roomService.queryRoomById(83151142);
+					int realCount = room.getRealCount();
+					int robotCount = room.getRobotCount();
+					int blankCount = room.getBlankCount();
+					countStr = "总：" + realCount + ", 机：" + robotCount + ", 空：" + blankCount;
+					
 				}
 				
 				if(arr.length == 1 && StringUtils.isNumber(arr[0])) {
@@ -158,7 +165,8 @@ public class WxController {
 							.append("-").append(ul.getOs()==0 ? "电脑" : (ul.getOs()==2 ? "苹果" : "安卓"))
 							.append(":\n")
 							.append(loginTime.substring(11)).append("-")
-							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n");
+							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n")
+							.append(countStr);
 					}
 				}
 				
