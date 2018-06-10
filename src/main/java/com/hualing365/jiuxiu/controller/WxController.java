@@ -94,37 +94,46 @@ public class WxController {
 				List<UserLog> userLogList = new ArrayList<UserLog>();
 				List<User> userHistoryList = null;
 				
-				if(arr.length == 1) {
-					userLogList = userLogService.queryAllUserOnline(Integer.valueOf(arr[0]));
+				//1和2快捷数字到达83151142
+				if(arr.length == 1 ) {
+					if("1".equals(arr[0])) {
+						arr[0] = "83151142";
+					}else if("2".equals(arr[0])) {
+						arr = new String[] {"83151142","h"};
+					}
+				}
+				
+				if(arr.length == 1 && StringUtils.isNumber(arr[0])) {
+					userLogList = userLogService.queryAllUserOnline(Integer.parseInt(arr[0]));
 					
-				} else if(arr.length == 2){
+				} else if(arr.length == 2 && StringUtils.isNumber(arr[0])){
 					//on-off
 					if(arr[1].equals("on")){
-						roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 1);
+						roomService.updateRoomOnOff(Integer.parseInt(arr[0]), 1);
 						result.append("ok");
 					}else if(arr[1].equals("off")){
-						roomService.updateRoomOnOff(Integer.valueOf(arr[0]), 0);
+						roomService.updateRoomOnOff(Integer.parseInt(arr[0]), 0);
 						result.append("ok");
 					}else if(arr[1].equals("h")){
-						userHistoryList = userService.queryHistory(Integer.valueOf(arr[0]));
+						userHistoryList = userService.queryHistory(Integer.parseInt(arr[0]));
 						for(int i=userHistoryList.size()-1; i>=0; i--){
 							User u = userHistoryList.get(i);
 							result.append(u.getNickName()).append("\n");
 						}
 					}else if(StringUtils.isNumber(arr[1])){
-						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]));
+						userLogList = userLogService.queryUserLog(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]));
 					}
 				
 				} else if(arr.length == 3){
 					//add-83151142-名称
 					if(arr[0].equals("add")){
 						Room room = new Room();
-						room.setRoomId(Integer.valueOf(arr[1]));
+						room.setRoomId(Integer.parseInt(arr[1]));
 						room.setRoomName(arr[2]);
 						roomService.addRoom(room);
 						result.append("ok");
-					}else{
-						userLogList = userLogService.queryUserLog(Integer.valueOf(arr[0]), Integer.valueOf(arr[1]), Integer.valueOf(arr[2]));
+					}else if(StringUtils.isNumber(arr[0]) && StringUtils.isNumber(arr[1]) && StringUtils.isNumber(arr[2])){
+						userLogList = userLogService.queryUserLog(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]), Integer.parseInt(arr[2]));
 					}
 				}
 				
