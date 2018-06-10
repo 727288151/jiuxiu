@@ -138,7 +138,7 @@ public class WxController {
 				}
 				
 				if(userHistoryList == null){
-					for(int i=userLogList.size()-1; i>=0; i--){
+					for(int i=0; i<userLogList.size(); i++){
 						UserLog ul = userLogList.get(i);
 						Calendar c = Calendar.getInstance();
 						c.setTime(sdf.parse(ul.getLoginDateTime()));
