@@ -165,14 +165,15 @@ public class WxController {
 							.append("-").append(ul.getOs()==0 ? "电脑" : (ul.getOs()==2 ? "苹果" : "安卓"))
 							.append(":\n")
 							.append(loginTime.substring(11)).append("-")
-							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n")
-							.append(countStr);
+							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n");
 					}
 				}
 				
 			}
 			if(result.length()==0){
-				result.append("指令输入不正确");
+				result.append("指令输入不正确^_^");
+			}else {
+				result.append(countStr);
 			}
 			
 		} catch (IOException e) {
