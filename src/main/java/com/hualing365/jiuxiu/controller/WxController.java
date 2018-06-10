@@ -165,7 +165,7 @@ public class WxController {
 							.append("-").append(ul.getOs()==0 ? "电脑" : (ul.getOs()==2 ? "苹果" : "安卓"))
 							.append(":\n")
 							.append(loginTime.substring(11)).append("-")
-							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n");
+							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n\n");
 					}
 				}
 				
