@@ -100,8 +100,10 @@ public class WxController {
 				if(arr.length == 1 ) {
 					if("1".equals(arr[0])) {
 						arr[0] = "83151142";
+						isValid = true;
 					}else if("2".equals(arr[0])) {
 						arr = new String[] {"83151142","20"};
+						isValid = true;
 					}
 					Room room = roomService.queryRoomById(83151142);
 					int realCount = room.getRealCount();
@@ -113,7 +115,6 @@ public class WxController {
 				
 				if(arr.length == 1 && StringUtils.isNumber(arr[0])) {
 					userLogList = userLogService.queryAllUserOnline(Integer.parseInt(arr[0]));
-					isValid = true;
 					
 				} else if(arr.length == 2 && StringUtils.isNumber(arr[0])){
 					//on-off
