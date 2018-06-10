@@ -82,6 +82,7 @@ public class WxController {
 		String fromUserName = null;
 		String toUserName = null;
 		String countStr = "";
+		boolean isValid = false;
 		try {
 			//String data = readStream(request.getInputStream());
 			
@@ -107,6 +108,7 @@ public class WxController {
 					int robotCount = room.getRobotCount();
 					int blankCount = room.getBlankCount();
 					countStr = "总：" + realCount + ", 机：" + robotCount + ", 空：" + blankCount;
+					isValid = true;
 					
 				}
 				
@@ -167,13 +169,12 @@ public class WxController {
 							.append(loginTime.substring(11)).append("-")
 							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n");
 					}
+					result.append("\n").append(countStr);
 				}
 				
 			}
 			if(result.length()==0){
-				result.append("指令输入不正确^_^");
-			}else {
-				result.append("\n").append(countStr);
+				return "success";
 			}
 			
 		} catch (IOException e) {
