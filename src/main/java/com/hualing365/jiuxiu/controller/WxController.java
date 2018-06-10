@@ -99,7 +99,7 @@ public class WxController {
 					if("1".equals(arr[0])) {
 						arr[0] = "83151142";
 					}else if("2".equals(arr[0])) {
-						arr = new String[] {"83151142","h"};
+						arr = new String[] {"83151142","20"};
 					}
 				}
 				
