@@ -165,7 +165,7 @@ public class WxController {
 							.append("-").append(ul.getOs()==0 ? "电脑" : (ul.getOs()==2 ? "苹果" : "安卓"))
 							.append(":\n")
 							.append(loginTime.substring(11)).append("-")
-							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n\n");
+							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n");
 					}
 				}
 				
@@ -173,7 +173,7 @@ public class WxController {
 			if(result.length()==0){
 				result.append("指令输入不正确^_^");
 			}else {
-				result.append(countStr);
+				result.append("\n").append(countStr);
 			}
 			
 		} catch (IOException e) {
