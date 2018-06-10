@@ -114,6 +114,7 @@ public class WxController {
 				
 				if(arr.length == 1 && StringUtils.isNumber(arr[0])) {
 					userLogList = userLogService.queryAllUserOnline(Integer.parseInt(arr[0]));
+					isValid = true;
 					
 				} else if(arr.length == 2 && StringUtils.isNumber(arr[0])){
 					//on-off
@@ -169,9 +170,11 @@ public class WxController {
 							.append(loginTime.substring(11)).append("-")
 							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n");
 					}
-					result.append("\n").append(countStr);
 				}
 				
+			}
+			if(isValid) {
+				result.append("\n").append(countStr);
 			}
 			if(result.length()==0){
 				return "success";
