@@ -108,7 +108,6 @@ public class WxController {
 					int robotCount = room.getRobotCount();
 					int blankCount = room.getBlankCount();
 					countStr = "总：" + realCount + ", 机：" + robotCount + ", 空：" + blankCount;
-					isValid = true;
 					
 				}
 				
