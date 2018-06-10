@@ -7,7 +7,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +48,8 @@ import com.hualing365.jiuxiu.wx.SignUtil;
 public class WxController {
 	
 	final Logger logger = LoggerFactory.getLogger(WxController.class);
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	@Autowired
 	IUserLogService userLogService;
@@ -127,17 +131,31 @@ public class WxController {
 				if(userHistoryList == null){
 					for(int i=userLogList.size()-1; i>=0; i--){
 						UserLog ul = userLogList.get(i);
-						result.append(ul.getWealthLevel()).append(".")
+						Calendar c = Calendar.getInstance();
+						c.setTime(sdf.parse(ul.getLoginDateTime()));
+						c.add(Calendar.HOUR_OF_DAY, 8);
+						String loginTime = sdf.format(c.getTime());
+						String logoutTime = null;
+						if(ul.getLogoutDateTime() != null) {
+							c.setTime(sdf.parse(ul.getLogoutDateTime()));
+							c.add(Calendar.HOUR_OF_DAY, 8);
+							logoutTime = sdf.format(c.getTime());
+						}
+						
+						
+						result.append("【").append(ul.getWealthLevel()).append("】")
 							.append(ul.getNickName()).append(ul.isHide()?"(隐)":"")
-							.append("-").append(ul.getUid()).append("-").append(ul.getOs()).append(":\n")
-							.append(ul.getLoginDateTime().substring(11)).append("-")
-							.append(ul.getLogoutDateTime()==null?"":ul.getLogoutDateTime().substring(11)).append("\n");
+							//.append("-").append(ul.getUid()).append("-").append(ul.getOs())
+							.append("-").append(ul.getOs()==0 ? "电脑" : (ul.getOs()==2 ? "苹果" : "安卓"))
+							.append(":\n")
+							.append(loginTime.substring(11)).append("-")
+							.append(logoutTime==null?"":logoutTime.substring(11)).append("\n");
 					}
 				}
 				
 			}
 			if(result.length()==0){
-				result.append(msgType);
+				result.append("指令输入不正确");
 			}
 			
 		} catch (IOException e) {
